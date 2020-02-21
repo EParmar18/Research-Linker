@@ -1,2 +1,2 @@
-# Research-Linker
-Grabs research papers and creates links between tehm
+# teamcrediblecollector.github.io
+credible collector github pages site

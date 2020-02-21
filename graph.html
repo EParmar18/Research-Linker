@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+
+    <script src="./build/sigma.min.js"></script>
+    <script src="./build/plugins/sigma.layout.forceAtlas2.min.js"></script>
+    <title>OII Network Visualisation Example</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+    <!-- Bootstrap CSS from a CDN. This way you don't have to include the bootstrap file yourself -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Your own stylesheet -->
+    <link rel="stylesheet" type="text/css" href="./graph_css_style/style.css">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Navigation</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./about/about.html">What Is It</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./whoweare/whoweare.html">Who We Are</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <style>
+      html {height:100%;}
+      body {height:100%;}
+      #sigma-container { width:100%; height:100%; background-color:#000000}
+
+    </style>
+
+
+  </head>
+
+  <body>
+
+    <div id='sigma-container'></div>
+    <p id='test'> </p>
+
+    <script>
+
+      var papers = [{"title": "['International Reference Ionosphere 2007: Improvements and new parameters']", "count": "592", "year": "2008"}, {"title": "['IntroductionThe Cluster mission']", "count": "399", "year": "2001"}, {"title": "['Polar mesosphere summer echoes (PMSE): Review of observations and current understanding']", "count": "235", "year": "2004"}, {"title": "['Ultraviolet spectroscopy of the extended solar corona']", "count": "134", "year": "2006"}, {"title": "['The Aeronomy of Ice in the Mesosphere (AIM) mission: Overview and early science results']", "count": "132", "year": "2009"}, {"title": "['Observation of the Wigner-Huntington transition to metallic hydrogen']", "count": "132", "year": "2017"}, {"title": "['The application of artificial electron beams to magnetospheric research.']", "count": "131", "year": "1980"}, {"title": "['Critical market crashes']", "count": "107", "year": "2003"}, {"title": "['Monitoring space weather with the GOES magnetometers']", "count": "91", "year": "1996"}, {"title": "['Spread F - an old equatorial aeronomy problem finally resolved?']", "count": "75", "year": "2009"}, {"title": "['Neutral air turbulence and temperatures in the vicinity of polar mesosphere summer echoes']", "count": "75", "year": "2002"}, {"title": "['Trace gas emissions from combustion of peat, crop residue, domestic biofuels, grasses, and other fuels: configuration and Fourier transform infrared (FTIR) component of the fourth Fire Lab at Missoula Experiment (FLAME-4)']", "count": "63", "year": "2014"}, {"title": "['SOLAR2000 irradiances for climate change research, aeronomy and space system engineering']", "count": "62", "year": "2004"}, {"title": "[\"An experimental test of the ``transmission-line model'' of electromagnetic radiation from triggered lightning return strokes\"]", "count": "61", "year": "1988"}, {"title": "['Solar irradiance reference spectra for two solar active levels']", "count": "61", "year": "2004"}, {"title": "['The Japanese lunar mission SELENE: Science goals and present status']", "count": "59", "year": "2008"}, {"title": "['Cubesats: Cost-effective science and technology platforms for emerging and developing nations']", "count": "58", "year": "2011"}, {"title": "['The Double Star mission']", "count": "57", "year": "2005"}, {"title": "['The Composition of a Coronal Active Region']", "count": "55", "year": "1994"}, {"title": "['MarcoPolo-R near earth asteroid sample return mission']", "count": "54", "year": "2012"}, {"title": "['The equatorial electrojet']", "count": "53", "year": "1989"}, {"title": "['First common volume observations of layered plasma structures and polar mesospheric summer echoes by rocket and radar']", "count": "53", "year": "2001"}, {"title": "['An analytical solution of finite-amplitude solitary kinetic Alfv\u00e9n waves']", "count": "52", "year": "1995"}, {"title": "['Irradiated and Bent Jets in the Orion Nebula']", "count": "51", "year": "2006"}, {"title": "['The Nuclear Spectroscopic Telescope Array (NuSTAR)']", "count": "51", "year": "2010"}, {"title": "['Properties of doped and undoped crystals of single domain KTiOAsO<SUB>4</SUB>']", "count": "51", "year": "1993"}, {"title": "['A survey and assessment of the capabilities of Cubesats for Earth observation']", "count": "50", "year": "2012"}, {"title": "['Space weather challenges of the polar cap ionosphere']", "count": "49", "year": "2013"}, {"title": "['Effects of chemical releases by the STS 3 orbiter on the ionosphere']", "count": "48", "year": "1985"}, {"title": "['Total solar eclipse effects on VLF signals: Observations and modeling']", "count": "47", "year": "2001"}, {"title": "['S\u00b3-A spacecraft and experiment description']", "count": "46", "year": "1973"}, {"title": "['The Kaguya Mission Overview']", "count": "45", "year": "2010"}, {"title": "['Space-borne coronagraphy']", "count": "42", "year": "1988"}, {"title": "['The energy budget campaign 1980 - Introductory review']", "count": "40", "year": "1985"}, {"title": "['The project MAP/WINE: an overview']", "count": "38", "year": "1987"}, {"title": "['The extreme ultraviolet spectroscope for planetary science, EXCEED']", "count": "36", "year": "2013"}, {"title": "['Studies of polar mesosphere summer echoes over EISCAT using calibrated signal strengths and statistical parameters']", "count": "35", "year": "1997"}, {"title": "['EUV SpectroPhotometer (ESP) in Extreme Ultraviolet Variability Experiment (EVE): Algorithms and Calibrations']", "count": "35", "year": "2012"}, {"title": "['Solar Fine-Scale Structures in the Corona, Transition Region, and Lower Atmosphere']", "count": "33", "year": "1994"}, {"title": "[\"Qualitative Analysis of College Students' Ideas about the Earth: Interviews and Open-Ended Questionnaires\"]", "count": "30", "year": "2005"}, {"title": "['Antarctic mesospheric temperature estimation using the Davis mesosphere-stratosphere-troposphere radar']", "count": "29", "year": "2006"}, {"title": "['Measurement of positively and negatively charged particles inside PMSE during MIDAS SOLSTICE 2001']", "count": "29", "year": "2003"}, {"title": "['Onset conditions for equatorial spread F determined during EQUIS II']", "count": "29", "year": "2005"}, {"title": "['The ROSE project - Scientific objectives and discussion of first results']", "count": "29", "year": "1992"}, {"title": "['Submicrosecond fields radiated during the onset of first return strokes in cloud-to-ground lightning']", "count": "27", "year": "1996"}, {"title": "['The DYANA campaign: A survey']", "count": "26", "year": "1994"}, {"title": "['Space radiation protection: Destination Mars']", "count": "25", "year": "2014"}, {"title": "['Capillary Surfaces']", "count": "25", "year": "2002"}, {"title": "['Development of the multi-spectral auroral camera onboard the index satellite']", "count": "25", "year": "2003"}, {"title": "['Wave rectification in plasma sheaths surrounding electric field antennas']", "count": "25", "year": "1994"}]
+
+      // var x
+      // for( x in papers) {
+      //   document.getElementById("test").innerHTML += x.slice( 2, x.length - 2) + "<br>";
+      //
+      // }
+      // Initialise sigma:
+      var s = new sigma(
+        {
+          renderer: {
+            container: document.getElementById('sigma-container'),
+            type: 'canvas'
+          },
+          settings: {
+            minEdgeSize: 0.1,
+            maxEdgeSize: 2,
+            minNodeSize: 5,
+            maxNodeSize: 10,
+            labelThreshold: 11,
+            labelSize: 'proportional'
+          }
+        }
+      );
+
+      var i;
+      for( i = 0; i < 50; i++ ) {
+        s.graph.addNode( {
+          id: papers[i].title,
+          label: papers[i].title.slice(2, papers[i].title.length - 2),
+          x: Math.random() * 1000000000,
+          y: Math.random() * 1000000000,
+          size: Math.log10(papers[i].count),
+          color: '#'+Math.floor(Math.random() * 16777215 ).toString(16)
+        });
+      }
+
+
+      var j;
+      var l;
+
+      for( j = 0; j < 49; j++ )
+        for( k = j + 1; k < 50; k++) {
+          if( Math.abs( papers[j].year - papers[k].year ) < 3  ) {
+            s.graph.addEdge( {
+              id: j.toString() + k,
+              source: papers[j].title,
+              target: papers[k].title
+            })
+          }
+        }
+
+      // Create a graph object
+      /*
+      var i;
+      for( i = 0; i < 9; i++ ) {
+        s.graph.addEdge( {
+          id:'e' + i,
+          source: i,
+          target: (i+1)
+        })
+      }
+      */
+
+
+      // Load the graph in sigma
+      //  s.graph.read(graph);
+      // Ask sigma to draw it
+      for( i = 0; i < 50; i++ ) {
+        document.getElementById("test").innerHTML += "<strong>" + papers[i].title.slice( 2, papers[i].title.length -2 ) + "</strong><br>" + "Number of times Cited: " + papers[i].count + "<br>";
+      }
+      s.refresh();
+
+      //temporarily runs for algorithm to move around nodes properly
+      //s.startForceAtlas2();
+      //window.setTimeout(function() {s.killForceAtlas2()}, 10000);
+
+    </script>
+
+
+
+  </body>
+
+
+
+</html>
